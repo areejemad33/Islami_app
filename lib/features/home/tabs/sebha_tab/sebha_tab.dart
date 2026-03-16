@@ -1,4 +1,4 @@
-import 'dart:math';
+
 
 import 'package:flutter/material.dart';
 import 'package:islami_app/core/assets_manager.dart';
@@ -15,7 +15,7 @@ class _SebhaTabState extends State<SebhaTab> {
 
   int counter = 0;
   int currentZekrIndex = 0;
-  double angle = 0;
+  double turns = 0;
 
   List<String> azkar = [
     "سبحان الله",
@@ -24,12 +24,15 @@ class _SebhaTabState extends State<SebhaTab> {
   ];
 
   void incrementCounter() {
+
     setState(() {
 
       counter++;
-      angle += pi / 12;
+
+      turns += 1/36; 
 
       if (counter == 33) {
+
         counter = 0;
 
         currentZekrIndex++;
@@ -40,8 +43,9 @@ class _SebhaTabState extends State<SebhaTab> {
       }
 
     });
-  }
 
+  }
+  
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +74,16 @@ class _SebhaTabState extends State<SebhaTab> {
             Image.asset(ImageAssets.sebhaHead),
 
             GestureDetector(
+
               onTap: incrementCounter,
+
               child: Stack(
                 alignment: Alignment.center,
                 children: [
 
-                  Transform.rotate(
-                    angle: angle,
+                  AnimatedRotation(
+                    turns: turns,
+                    duration: const Duration(milliseconds: 300),
                     child: Image.asset(
                       ImageAssets.sebhaBody,
                     ),
@@ -104,6 +111,7 @@ class _SebhaTabState extends State<SebhaTab> {
                           color: ColorsManager.ofwhite,
                         ),
                       ),
+
                     ],
                   ),
                 ],
